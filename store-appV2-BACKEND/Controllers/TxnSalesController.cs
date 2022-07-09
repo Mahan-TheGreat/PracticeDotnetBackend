@@ -50,7 +50,6 @@ namespace store_appV2_BACKEND.Controllers
             return Ok(result);
         }
 
-        [Route("/api/TxnSales/GenReport")]
         [HttpGet("/api/TxnSales/GenReport")]
 
         public async Task<ActionResult> GenReport()
@@ -85,7 +84,7 @@ namespace store_appV2_BACKEND.Controllers
                             }).GroupBy(a => a.itemName).Select(g => new
                             {
                                 ItemName = g.Key,
-                                quantity = g.Count(),
+                                quantity = g.Sum(a=>a.quantity),
                                 totalPrice = g.Sum(a => a.totalPrice)
                             }).ToListAsync();
 

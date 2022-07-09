@@ -32,7 +32,7 @@ namespace store_appV2_BACKEND.Controllers
           {
               return NotFound();
           }
-            return await _context.Inventories.ToListAsync();
+            return await _context.Inventories.Where(x => x.IsActive == true).ToListAsync();
         }
 
         [HttpGet("{id}")]
@@ -58,10 +58,6 @@ namespace store_appV2_BACKEND.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutInventory(int id, Inventory inventory)
         {
-            if (id != inventory.Id)
-            {
-                return BadRequest();
-            }
 
             _context.Entry(inventory).State = EntityState.Modified;
 
@@ -71,7 +67,7 @@ namespace store_appV2_BACKEND.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!InventoryExists(id))
+                if (!InventoryExists(inventory.Id))
                 {
                     return NotFound();
                 }
@@ -120,12 +116,16 @@ namespace store_appV2_BACKEND.Controllers
                 return NotFound();
             }
             var inventory = await _context.Inventories.FindAsync(id);
+            if (inventory != null)
+            {
+                inventory.IsActive = false;
+
+            }
             if (inventory == null)
             {
                 return NotFound();
             }
 
-            _context.Inventories.Remove(inventory);
             await _context.SaveChangesAsync();
 
             return NoContent();
