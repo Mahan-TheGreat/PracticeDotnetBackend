@@ -56,7 +56,7 @@ namespace store_appV2_BACKEND.Controllers
         // PUT: api/Inventories/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutInventory(int id, Inventory inventory)
+        public async Task<ActionResult<Inventory>> PutInventory( Inventory inventory)
         {
 
             _context.Entry(inventory).State = EntityState.Modified;
@@ -77,8 +77,9 @@ namespace store_appV2_BACKEND.Controllers
                 }
             }
 
-            return NoContent();
-        }
+            return Ok(new { status = 200, id = inventory.Id });
+        
+    }
 
         // POST: api/Inventories
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
