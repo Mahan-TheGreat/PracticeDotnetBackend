@@ -20,11 +20,14 @@ namespace store_appV2_BACKEND.Data
         public virtual DbSet<Dispencary> Dispencaries { get; set; } = null!;
         public virtual DbSet<Inventory> Inventories { get; set; } = null!;
         public virtual DbSet<TxnSale> TxnSales { get; set; } = null!;
+        public virtual DbSet<User> Users { get; set; } = null!;
+        public virtual DbSet<UsersCred> UsersCreds { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseSqlServer("Data Source=DESKTOP-3G90KEK\\SQLEXPRESS;Initial Catalog=StoreApp;Integrated Security=True");
             }
         }
@@ -81,7 +84,69 @@ namespace store_appV2_BACKEND.Data
 
                 entity.Property(e => e.TotalPrice).HasColumnName("totalPrice");
 
-               
+                entity.HasOne(d => d.Item)
+                    .WithMany(p => p.TxnSales)
+                    .HasForeignKey(d => d.ItemId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__TXN_Sales__itemI__5CD6CB2B");
+            });
+
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Contact)
+                    .HasMaxLength(15)
+                    .IsUnicode(false)
+                    .HasColumnName("contact");
+
+                entity.Property(e => e.FirstName)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("firstName");
+
+                entity.Property(e => e.IsActive).HasColumnName("isActive");
+
+                entity.Property(e => e.LastName)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("lastName");
+
+                entity.Property(e => e.Location)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("location");
+            });
+
+            modelBuilder.Entity<UsersCred>(entity =>
+            {
+                entity.ToTable("UsersCred");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Email)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("email");
+
+                entity.Property(e => e.IsActive).HasColumnName("isActive");
+
+                entity.Property(e => e.Location)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("location");
+
+                entity.Property(e => e.Password)
+                    .HasMaxLength(40)
+                    .IsUnicode(false)
+                    .HasColumnName("password");
+
+                entity.Property(e => e.UserId).HasColumnName("userID");
+
+                entity.Property(e => e.UserName)
+                    .HasMaxLength(100)
+                    .IsUnicode(false)
+                    .HasColumnName("userName");
             });
 
             OnModelCreatingPartial(modelBuilder);
