@@ -28,10 +28,10 @@ namespace store_appV2_BACKEND.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Inventory>>> GetInventories()
         {
-          if (_context.Inventories == null)
-          {
-              return NotFound();
-          }
+            if (_context.Inventories == null)
+            {
+                return NotFound();
+            }
             return await _context.Inventories.Where(x => x.IsActive == true).ToListAsync();
         }
 
@@ -39,10 +39,10 @@ namespace store_appV2_BACKEND.Controllers
 
         public async Task<ActionResult<Inventory>> GetInventory(int id)
         {
-          if (_context.Inventories == null)
-          {
-              return NotFound();
-          }
+            if (_context.Inventories == null)
+            {
+                return NotFound();
+            }
             var inventory = await _context.Inventories.FindAsync(id);
 
             if (inventory == null)
@@ -56,7 +56,7 @@ namespace store_appV2_BACKEND.Controllers
         // PUT: api/Inventories/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<ActionResult<Inventory>> PutInventory( Inventory inventory)
+        public async Task<ActionResult<Inventory>> PutInventory(Inventory inventory)
         {
 
             _context.Entry(inventory).State = EntityState.Modified;
@@ -78,18 +78,18 @@ namespace store_appV2_BACKEND.Controllers
             }
 
             return Ok(new { status = 200, id = inventory.Id });
-        
-    }
+
+        }
 
         // POST: api/Inventories
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Inventory>> PostInventory(Inventory inventory)
         {
-          if (_context.Inventories == null)
-          {
-              return Problem("Entity set 'ApplicationDBContext.Inventories'  is null.");
-          }
+            if (_context.Inventories == null)
+            {
+                return Problem("Entity set 'ApplicationDBContext.Inventories'  is null.");
+            }
             _context.Inventories.Add(inventory);
             try
             {
@@ -106,7 +106,8 @@ namespace store_appV2_BACKEND.Controllers
                     throw;
                 }
             }
-            return Ok(new {status=200,id = inventory.Id});}
+            return Ok(new { status = 200, id = inventory.Id });
+        }
 
         // DELETE: api/Inventories/5
         [HttpDelete("{id}")]

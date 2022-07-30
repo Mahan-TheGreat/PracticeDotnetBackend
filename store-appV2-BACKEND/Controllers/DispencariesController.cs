@@ -25,10 +25,10 @@ namespace store_appV2_BACKEND.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Dispencary>>> GetDispencaries()
         {
-          if (_context.Dispencaries == null)
-          {
-              return NotFound();
-          }
+            if (_context.Dispencaries == null)
+            {
+                return NotFound();
+            }
             return await _context.Dispencaries.ToListAsync();
         }
 
@@ -36,10 +36,10 @@ namespace store_appV2_BACKEND.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Dispencary>> GetDispencary(int id)
         {
-          if (_context.Dispencaries == null)
-          {
-              return NotFound();
-          }
+            if (_context.Dispencaries == null)
+            {
+                return NotFound();
+            }
             var dispencary = await _context.Dispencaries.FindAsync(id);
 
             if (dispencary == null)
@@ -86,10 +86,10 @@ namespace store_appV2_BACKEND.Controllers
         [HttpPost]
         public async Task<ActionResult<Dispencary>> PostDispencary(Dispencary dispencary)
         {
-          if (_context.Dispencaries == null)
-          {
-              return Problem("Entity set 'ApplicationDBContext.Dispencaries'  is null.");
-          }
+            if (_context.Dispencaries == null)
+            {
+                return Problem("Entity set 'ApplicationDBContext.Dispencaries'  is null.");
+            }
             _context.Dispencaries.Add(dispencary);
             try
             {

@@ -34,7 +34,7 @@ namespace store_appV2_BACKEND.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult> PostInventory(User user1) 
+        public async Task<ActionResult> PostUsers(User user1)
         {
             if (_context.Users == null)
             {
@@ -56,8 +56,7 @@ namespace store_appV2_BACKEND.Controllers
                     throw;
                 }
             }
-            return Ok(new { status = 200, id = user1.Id
-            });
+            return Ok(new { status = 200, id = user1.Id });
         }
 
         private bool UsersExists(int id)

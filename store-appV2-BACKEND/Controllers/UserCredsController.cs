@@ -10,11 +10,11 @@ namespace store_appV2_BACKEND.Controllers
     [EnableCors("_myAllowSpecificOrigins")]
     [Route("api/[controller]")]
     [ApiController]
-    public class UsersCredsController : ControllerBase
+    public class UserCredsController : ControllerBase
     {
         private readonly ApplicationDBContext _context;
 
-        public UsersCredsController(ApplicationDBContext context)
+        public UserCredsController(ApplicationDBContext context)
         {
             _context = context;
         }
@@ -22,20 +22,20 @@ namespace store_appV2_BACKEND.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult> PostInventory(UsersCred user1)
+        public async Task<ActionResult> PostUserCreds(UserCred user1)
         {
             if (_context.Users == null)
             {
-                return Problem("Entity set 'ApplicationDBContext.Users'  is null.");
+                return Problem("Entity set 'ApplicationDBContext.Userscreds'  is null.");
             }
-            _context.UsersCreds.Add(user1);
+            _context.UserCreds.Add(user1);
             try
             {
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateException)
             {
-                if (UserscredExists(user1.Id))
+                if (UsercredExists(user1.Id))
                 {
                     return Conflict();
                 }
@@ -47,9 +47,9 @@ namespace store_appV2_BACKEND.Controllers
             return Ok(new { status = 200, id = user1.Id });
         }
 
-        private bool UserscredExists(int id)
+        private bool UsercredExists(int id)
         {
-            return (_context.UsersCreds?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.UserCreds?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

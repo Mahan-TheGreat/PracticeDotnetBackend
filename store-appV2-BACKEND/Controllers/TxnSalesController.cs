@@ -84,7 +84,7 @@ namespace store_appV2_BACKEND.Controllers
                             }).GroupBy(a => a.itemName).Select(g => new
                             {
                                 ItemName = g.Key,
-                                quantity = g.Sum(a=>a.quantity),
+                                quantity = g.Sum(a => a.quantity),
                                 totalPrice = g.Sum(a => a.totalPrice)
                             }).ToListAsync();
 
@@ -144,7 +144,7 @@ namespace store_appV2_BACKEND.Controllers
             return NoContent();
         }
 
-     
+
 
         // POST: api/Sales
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
@@ -156,7 +156,7 @@ namespace store_appV2_BACKEND.Controllers
                 return Problem("Entity set 'ApplicationDBContext.TxnSales'  is null.");
             }
             _context.TxnSales.Add(sale);
-           var x = _context.Inventories.First(e=>e.Id == sale.ItemId).Quantity-=sale.Quantity;
+            var x = _context.Inventories.First(e => e.Id == sale.ItemId).Quantity -= sale.Quantity;
             Console.WriteLine(x);
             try
             {

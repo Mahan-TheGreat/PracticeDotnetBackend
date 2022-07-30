@@ -18,7 +18,7 @@ string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name:MyAllowSpecificOrigins,
+    options.AddPolicy(name: MyAllowSpecificOrigins,
                       builder =>
                       {
                           builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
