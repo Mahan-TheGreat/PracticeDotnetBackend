@@ -22,12 +22,12 @@ namespace store_appV2_BACKEND.Data
         public virtual DbSet<TxnSale> TxnSales { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
         public virtual DbSet<UsersCred> UsersCreds { get; set; } = null!;
+        public object UsersCred { get; internal set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseSqlServer("Data Source=DESKTOP-3G90KEK\\SQLEXPRESS;Initial Catalog=StoreApp;Integrated Security=True");
             }
         }
